@@ -55,12 +55,14 @@ extension SearchEventPatterns on SearchEvent {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( UsernameSubmitted value)?  usernameSubmitted,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Started value)?  started,TResult Function( UsernameSubmitted value)?  usernameSubmitted,TResult Function( RecentSearchRemoved value)?  recentSearchRemoved,TResult Function( RecentSearchesCleared value)?  recentSearchesCleared,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case UsernameSubmitted() when usernameSubmitted != null:
-return usernameSubmitted(_that);case _:
+return usernameSubmitted(_that);case RecentSearchRemoved() when recentSearchRemoved != null:
+return recentSearchRemoved(_that);case RecentSearchesCleared() when recentSearchesCleared != null:
+return recentSearchesCleared(_that);case _:
   return orElse();
 
 }
@@ -78,12 +80,14 @@ return usernameSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( UsernameSubmitted value)  usernameSubmitted,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Started value)  started,required TResult Function( UsernameSubmitted value)  usernameSubmitted,required TResult Function( RecentSearchRemoved value)  recentSearchRemoved,required TResult Function( RecentSearchesCleared value)  recentSearchesCleared,}){
 final _that = this;
 switch (_that) {
 case _Started():
 return started(_that);case UsernameSubmitted():
-return usernameSubmitted(_that);case _:
+return usernameSubmitted(_that);case RecentSearchRemoved():
+return recentSearchRemoved(_that);case RecentSearchesCleared():
+return recentSearchesCleared(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -100,12 +104,14 @@ return usernameSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( UsernameSubmitted value)?  usernameSubmitted,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Started value)?  started,TResult? Function( UsernameSubmitted value)?  usernameSubmitted,TResult? Function( RecentSearchRemoved value)?  recentSearchRemoved,TResult? Function( RecentSearchesCleared value)?  recentSearchesCleared,}){
 final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started(_that);case UsernameSubmitted() when usernameSubmitted != null:
-return usernameSubmitted(_that);case _:
+return usernameSubmitted(_that);case RecentSearchRemoved() when recentSearchRemoved != null:
+return recentSearchRemoved(_that);case RecentSearchesCleared() when recentSearchesCleared != null:
+return recentSearchesCleared(_that);case _:
   return null;
 
 }
@@ -122,11 +128,13 @@ return usernameSubmitted(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String username)?  usernameSubmitted,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  started,TResult Function( String username)?  usernameSubmitted,TResult Function( String username)?  recentSearchRemoved,TResult Function()?  recentSearchesCleared,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case UsernameSubmitted() when usernameSubmitted != null:
-return usernameSubmitted(_that.username);case _:
+return usernameSubmitted(_that.username);case RecentSearchRemoved() when recentSearchRemoved != null:
+return recentSearchRemoved(_that.username);case RecentSearchesCleared() when recentSearchesCleared != null:
+return recentSearchesCleared();case _:
   return orElse();
 
 }
@@ -144,11 +152,13 @@ return usernameSubmitted(_that.username);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String username)  usernameSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  started,required TResult Function( String username)  usernameSubmitted,required TResult Function( String username)  recentSearchRemoved,required TResult Function()  recentSearchesCleared,}) {final _that = this;
 switch (_that) {
 case _Started():
 return started();case UsernameSubmitted():
-return usernameSubmitted(_that.username);case _:
+return usernameSubmitted(_that.username);case RecentSearchRemoved():
+return recentSearchRemoved(_that.username);case RecentSearchesCleared():
+return recentSearchesCleared();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -165,11 +175,13 @@ return usernameSubmitted(_that.username);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String username)?  usernameSubmitted,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  started,TResult? Function( String username)?  usernameSubmitted,TResult? Function( String username)?  recentSearchRemoved,TResult? Function()?  recentSearchesCleared,}) {final _that = this;
 switch (_that) {
 case _Started() when started != null:
 return started();case UsernameSubmitted() when usernameSubmitted != null:
-return usernameSubmitted(_that.username);case _:
+return usernameSubmitted(_that.username);case RecentSearchRemoved() when recentSearchRemoved != null:
+return recentSearchRemoved(_that.username);case RecentSearchesCleared() when recentSearchesCleared != null:
+return recentSearchesCleared();case _:
   return null;
 
 }
@@ -274,6 +286,104 @@ as String,
 
 
 }
+
+/// @nodoc
+
+
+class RecentSearchRemoved implements SearchEvent {
+  const RecentSearchRemoved(this.username);
+  
+
+ final  String username;
+
+/// Create a copy of SearchEvent
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+$RecentSearchRemovedCopyWith<RecentSearchRemoved> get copyWith => _$RecentSearchRemovedCopyWithImpl<RecentSearchRemoved>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecentSearchRemoved&&(identical(other.username, username) || other.username == username));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,username);
+
+@override
+String toString() {
+  return 'SearchEvent.recentSearchRemoved(username: $username)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class $RecentSearchRemovedCopyWith<$Res> implements $SearchEventCopyWith<$Res> {
+  factory $RecentSearchRemovedCopyWith(RecentSearchRemoved value, $Res Function(RecentSearchRemoved) _then) = _$RecentSearchRemovedCopyWithImpl;
+@useResult
+$Res call({
+ String username
+});
+
+
+
+
+}
+/// @nodoc
+class _$RecentSearchRemovedCopyWithImpl<$Res>
+    implements $RecentSearchRemovedCopyWith<$Res> {
+  _$RecentSearchRemovedCopyWithImpl(this._self, this._then);
+
+  final RecentSearchRemoved _self;
+  final $Res Function(RecentSearchRemoved) _then;
+
+/// Create a copy of SearchEvent
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? username = null,}) {
+  return _then(RecentSearchRemoved(
+null == username ? _self.username : username // ignore: cast_nullable_to_non_nullable
+as String,
+  ));
+}
+
+
+}
+
+/// @nodoc
+
+
+class RecentSearchesCleared implements SearchEvent {
+  const RecentSearchesCleared();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RecentSearchesCleared);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'SearchEvent.recentSearchesCleared()';
+}
+
+
+}
+
+
+
 
 /// @nodoc
 mixin _$SearchState {

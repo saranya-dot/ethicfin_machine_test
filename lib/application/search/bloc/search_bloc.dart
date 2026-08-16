@@ -21,9 +21,27 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       super(SearchState.initial()) {
     on<_Started>(_onStarted);
     on<UsernameSubmitted>(_onUsernameSubmitted);
+    on<RecentSearchRemoved>(_onRecentSearchRemoved);
+    on<RecentSearchesCleared>(_onRecentSearchesCleared);
   }
 
   void _onStarted(_Started event, Emitter<SearchState> emit) {
+    emit(state.copyWith(recentSearches: _recentSearchesStorage.getRecent()));
+  }
+
+  Future<void> _onRecentSearchRemoved(
+    RecentSearchRemoved event,
+    Emitter<SearchState> emit,
+  ) async {
+    await _recentSearchesStorage.remove(event.username);
+    emit(state.copyWith(recentSearches: _recentSearchesStorage.getRecent()));
+  }
+
+  Future<void> _onRecentSearchesCleared(
+    RecentSearchesCleared event,
+    Emitter<SearchState> emit,
+  ) async {
+    await _recentSearchesStorage.clear();
     emit(state.copyWith(recentSearches: _recentSearchesStorage.getRecent()));
   }
 

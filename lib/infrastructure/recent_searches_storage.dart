@@ -29,4 +29,16 @@ class RecentSearchesStorage {
       await _box.deleteAt(0);
     }
   }
+
+  Future<void> remove(String username) async {
+    final normalized = username.trim().toLowerCase();
+    final keys = _box.keys.where(
+      (key) => _box.get(key)?.username.toLowerCase() == normalized,
+    );
+    await _box.deleteAll(keys);
+  }
+
+  Future<void> clear() async {
+    await _box.clear();
+  }
 }

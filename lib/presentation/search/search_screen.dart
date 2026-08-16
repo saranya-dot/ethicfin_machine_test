@@ -97,6 +97,12 @@ class _SearchViewState extends State<_SearchView> {
                   return _RecentSearchesDropdown(
                     recentSearches: state.recentSearches,
                     onSelected: (username) => _submit(context, username),
+                    onRemove: (username) => context.read<SearchBloc>().add(
+                      SearchEvent.recentSearchRemoved(username),
+                    ),
+                    onClearAll: () => context.read<SearchBloc>().add(
+                      const SearchEvent.recentSearchesCleared(),
+                    ),
                   );
                 },
               ),
@@ -137,10 +143,14 @@ class _RecentSearchesDropdown extends StatelessWidget {
   const _RecentSearchesDropdown({
     required this.recentSearches,
     required this.onSelected,
+    required this.onRemove,
+    required this.onClearAll,
   });
 
   final List<String> recentSearches;
   final ValueChanged<String> onSelected;
+  final ValueChanged<String> onRemove;
+  final VoidCallback onClearAll;
 
   @override
   Widget build(BuildContext context) {
@@ -161,12 +171,34 @@ class _RecentSearchesDropdown extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Recent searches',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: colors.onSurfaceVariant,
+                  ),
+                ),
+                TextButton(
+                  onPressed: onClearAll,
+                  child: const Text('Clear all'),
+                ),
+              ],
+            ),
+          ),
           for (final username in recentSearches)
             ListTile(
               dense: true,
               leading: Icon(Icons.history, color: colors.onSurfaceVariant),
               title: Text(username),
               onTap: () => onSelected(username),
+              trailing: IconButton(
+                icon: const Icon(Icons.close, size: 18),
+                onPressed: () => onRemove(username),
+              ),
             ),
         ],
       ),
